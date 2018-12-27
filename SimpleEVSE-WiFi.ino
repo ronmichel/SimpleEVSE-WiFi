@@ -133,6 +133,7 @@ bool useRFID = false;
 bool useSMeter = false;
 bool useMMeter = false;
 bool useButton = false;
+bool useWsAuthentication = false;
 bool inAPMode = false;
 bool inFallbackMode = false;
 bool isWifiConnected = false;
@@ -1383,8 +1384,14 @@ bool ICACHE_FLASH_ATTR loadConfiguration() {
   const char * password = json["pswd"];
   int wmode = json["wmode"];
   adminpass = strdup(json["adminpwd"]);
-
-  ws.setAuthentication("admin", adminpass);
+  
+  if(json.containsKey("wsauth")){
+	useWsAuthentication = json["wsauth"]
+  }
+  
+  if(!useWsAuthentication){
+	ws.setAuthentication("admin", adminpass);
+  }
   server.addHandler(new SPIFFSEditor("admin", adminpass));
 
   queryEVSE();
