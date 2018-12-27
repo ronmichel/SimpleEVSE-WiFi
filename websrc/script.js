@@ -506,6 +506,10 @@ function listCONF(obj) {
   document.getElementById("gain").value = obj.rfidgain;
   document.getElementById("gpiobutton").value = obj.buttonpin;
   
+  
+  if (typeof obj.wsauth !== "undefined"){
+	document.getElementById("checkboxSafari").value = obj.wsauth;
+  }
   if (typeof obj.debug !== "undefined"){
 	document.getElementById("checkboxDebug").checked = obj.debug;
   }
@@ -554,7 +558,6 @@ function listCONF(obj) {
   else{
 	  document.getElementById("avgconsumption").value = "15.5";
   }
-  
   
   if (typeof obj.factor !== "undefined"){
 	  document.getElementById("factor").value = obj.factor;
@@ -793,6 +796,7 @@ function saveConf() {
   }
   
   datatosend.debug = document.getElementById("checkboxDebug").checked;
+  datatosend.wsauth = document.getElementById("checkboxSafari").checked;
 
   datatosend.rfid = document.getElementById("checkboxRfid").checked;
   datatosend.sspin = document.getElementById("gpioss").value;
