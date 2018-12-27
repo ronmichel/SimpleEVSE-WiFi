@@ -508,7 +508,7 @@ function listCONF(obj) {
   
   
   if (typeof obj.wsauth !== "undefined"){
-	document.getElementById("checkboxSafari").value = obj.wsauth;
+	document.getElementById("checkboxSafari").checked = obj.wsauth;
   }
   if (typeof obj.debug !== "undefined"){
 	document.getElementById("checkboxDebug").checked = obj.debug;
