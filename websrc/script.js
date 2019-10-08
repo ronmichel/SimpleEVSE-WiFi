@@ -6,6 +6,7 @@ var wsUri;
 var firstEVSEData = true;
 var chargingTime;
 var evseActive;
+var evseCharging = false;
 
 //Users
 var timezone;
@@ -61,24 +62,28 @@ function listEVSEData(obj) {
 		$("#carStatusCharging").addClass('hidden');
 		$("#carStatusReady").removeClass('hidden');
 		document.getElementById("evse_vehicle_state").innerHTML = "Modbus Error";
+		evseCharging=false;
 	}
 	if (obj.evse_vehicle_state === 1){	//Ready
 		$("#carStatusDetected").addClass('hidden');
 		$("#carStatusCharging").addClass('hidden');
 		$("#carStatusReady").removeClass('hidden');
 		document.getElementById("evse_vehicle_state").innerHTML = "Ready";
+		evseCharging=false;
 	}
 	if (obj.evse_vehicle_state === 2){	//Vehicle Detected
 		$("#carStatusReady").addClass('hidden');
 		$("#carStatusCharging").addClass('hidden');
 		$("#carStatusDetected").removeClass('hidden');
 		document.getElementById("evse_vehicle_state").innerHTML = "Vehicle Detected";
+		evseCharging=false;
 	}
 	if (obj.evse_vehicle_state === 3){	//Vehicle charging
 		$("#carStatusReady").addClass('hidden');
 		$("#carStatusDetected").addClass('hidden');
 		$("#carStatusCharging").removeClass('hidden');
 		document.getElementById("evse_vehicle_state").innerHTML = "Charging...";
+		evseCharging=true;
 	}
 	document.getElementById("evse_charging_time").innerHTML = getTimeFormat(obj.evse_charging_time);
 	if (firstEVSEData === true){
@@ -506,9 +511,6 @@ function listCONF(obj) {
   document.getElementById("gain").value = obj.rfidgain;
   document.getElementById("gpiobutton").value = obj.buttonpin;
   
-  if (typeof obj.wsauth !== "undefined"){
-	document.getElementById("checkboxSafari").checked = obj.wsauth;
-  }
   if (typeof obj.debug !== "undefined"){
 	document.getElementById("checkboxDebug").checked = obj.debug;
   }
@@ -587,7 +589,7 @@ function deviceTime() {
 }
 
 function chargingTime(){
-	if (evseActive === true){
+	if (evseCharging === true){
 		chargingTime = chargingTime + 1000;
 		document.getElementById("evse_charging_time").innerHTML = getTimeFormat(chargingTime);
 	}
@@ -795,7 +797,6 @@ function saveConf() {
 	datatosend.dns = document.getElementById("dnsch").value;
   }
   
-  datatosend.wsauth = document.getElementById("checkboxSafari").checked;
   datatosend.debug = document.getElementById("checkboxDebug").checked;
 
   datatosend.rfid = document.getElementById("checkboxRfid").checked;
@@ -1034,14 +1035,6 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-function showCurrentModal() {
-	$("#currentModal").modal();
-}
-
-function showEvseRegModal() {
-	$("#evseRegModal").modal();
-}
-
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
@@ -1147,10 +1140,10 @@ function socketErrorListener(evt) {
 }
 function login() {
     var username = "admin"
-    var passwd = document.getElementById("password").value;
+    var password = document.getElementById("password").value;
     var url = "/login";
     var xhr = new XMLHttpRequest();
-    xhr.open("get", url, true, username, passwd);
+    xhr.open("get", url, true, username, password);
     xhr.onload = function(e) {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {

@@ -18,13 +18,6 @@ If you want to support this project, I would be very happy about a donation.
 * Rudimentary settings (WiFi settings, password for web interface, maximum charging current, etc.)
 * Output of all important parameters of the SimpleEVSE WB (Modbus)
 
-## Buy the EVSE-WiFi-Module
-
-If you do not have the time and desire to flash an ESP module and customize the libraries, you can also purchase the already prepared module in the shop with all wires and additional Hardware you need.
-
-[www.evse-wifi.de](https://www.evse-wifi.de/shop/)
-
-
 ## Preview
 
 Control the Current your EVSE communicates to the vehicle. This page also shows additional data like metered energy and the charging time.
@@ -44,8 +37,7 @@ At the users page you can define valid RFID tags that can unlock the EVSE.
 ## What You Will Need
 
 ### Hardware
-* A complete Wallbox based on EVSE Wallbox [link](https://www.evse-wifi.de/produkt/evse-wallbox-steuereinheit/) (min. Software revision 8 (2017-10-31) is needed - read the manual there for updating your EVSE software)
-**Attention: revision 9 does not work, because there is a bug in the firmware.**
+* A complete Wallbox based on EVSE Wallbox [link](http://evracing.cz/simple-evse-wallbox/) (min. Software revision 8 (2017-10-31) is needed - read the manual there for updating your EVSE software)
 * An ESP8266 module or a development board like **WeMos D1 mini** or **NodeMcu 1.0**
 * (optional) An electricity meter with S0 interface
 * (optional) A MFRC522 RFID Module (PN532 and Wiegand based RFID reader modules are not supported at this time)
